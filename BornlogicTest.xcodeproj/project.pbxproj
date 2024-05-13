@@ -17,6 +17,8 @@
 		091F9D7E2BF0DB70001549BB /* BornlogicTestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F9D7D2BF0DB70001549BB /* BornlogicTestUITestsLaunchTests.swift */; };
 		091F9D8C2BF0EA36001549BB /* NewListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F9D8B2BF0EA36001549BB /* NewListView.swift */; };
 		091F9D8F2BF0F28E001549BB /* NewsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F9D8E2BF0F28E001549BB /* NewsListCell.swift */; };
+		091F9D942BF0F77D001549BB /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F9D932BF0F77D001549BB /* Colors.swift */; };
+		091F9D962BF0FCC4001549BB /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F9D952BF0FCC4001549BB /* ViewCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		091F9D8B2BF0EA36001549BB /* NewListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListView.swift; sourceTree = "<group>"; };
 		091F9D8E2BF0F28E001549BB /* NewsListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListCell.swift; sourceTree = "<group>"; };
 		091F9D912BF0F34C001549BB /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		091F9D932BF0F77D001549BB /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		091F9D952BF0FCC4001549BB /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,7 @@
 		091F9D592BF0DB6D001549BB /* BornlogicTest */ = {
 			isa = PBXGroup;
 			children = (
+				091F9D922BF0F76F001549BB /* Commons */,
 				091F9D902BF0F335001549BB /* Secrets */,
 				091F9D8D2BF0EA55001549BB /* System */,
 				091F9D8A2BF0EA0D001549BB /* NewsListing */,
@@ -154,6 +159,15 @@
 				091F9D912BF0F34C001549BB /* Secrets.xcconfig */,
 			);
 			path = Secrets;
+			sourceTree = "<group>";
+		};
+		091F9D922BF0F76F001549BB /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				091F9D932BF0F77D001549BB /* Colors.swift */,
+				091F9D952BF0FCC4001549BB /* ViewCode.swift */,
+			);
+			path = Commons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,7 +301,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				091F9D5F2BF0DB6D001549BB /* NewsListViewController.swift in Sources */,
+				091F9D942BF0F77D001549BB /* Colors.swift in Sources */,
 				091F9D8F2BF0F28E001549BB /* NewsListCell.swift in Sources */,
+				091F9D962BF0FCC4001549BB /* ViewCode.swift in Sources */,
 				091F9D8C2BF0EA36001549BB /* NewListView.swift in Sources */,
 				091F9D5B2BF0DB6D001549BB /* AppDelegate.swift in Sources */,
 				091F9D5D2BF0DB6D001549BB /* SceneDelegate.swift in Sources */,
