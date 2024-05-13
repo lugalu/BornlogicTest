@@ -19,6 +19,13 @@
 		091F9D8F2BF0F28E001549BB /* NewsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F9D8E2BF0F28E001549BB /* NewsListCell.swift */; };
 		091F9D942BF0F77D001549BB /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F9D932BF0F77D001549BB /* Colors.swift */; };
 		091F9D962BF0FCC4001549BB /* ViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F9D952BF0FCC4001549BB /* ViewCode.swift */; };
+		09C3D3812BF279AA0091840F /* NewsListingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3D3802BF279AA0091840F /* NewsListingInteractor.swift */; };
+		09C3D3832BF279B50091840F /* NewsListingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3D3822BF279B50091840F /* NewsListingPresenter.swift */; };
+		09C3D3852BF279C40091840F /* NewsListingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3D3842BF279C40091840F /* NewsListingRouter.swift */; };
+		09C3D3882BF27E220091840F /* NewsListingContractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3D3872BF27E220091840F /* NewsListingContractor.swift */; };
+		09C3D38A2BF284DF0091840F /* NewsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3D3892BF284DF0091840F /* NewsEntity.swift */; };
+		09C3D38D2BF288BE0091840F /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3D38C2BF288BE0091840F /* NetworkService.swift */; };
+		09C3D38F2BF28ACA0091840F /* NetworkErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3D38E2BF28ACA0091840F /* NetworkErrors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +63,13 @@
 		091F9D912BF0F34C001549BB /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		091F9D932BF0F77D001549BB /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		091F9D952BF0FCC4001549BB /* ViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCode.swift; sourceTree = "<group>"; };
+		09C3D3802BF279AA0091840F /* NewsListingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListingInteractor.swift; sourceTree = "<group>"; };
+		09C3D3822BF279B50091840F /* NewsListingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListingPresenter.swift; sourceTree = "<group>"; };
+		09C3D3842BF279C40091840F /* NewsListingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListingRouter.swift; sourceTree = "<group>"; };
+		09C3D3872BF27E220091840F /* NewsListingContractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListingContractor.swift; sourceTree = "<group>"; };
+		09C3D3892BF284DF0091840F /* NewsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsEntity.swift; sourceTree = "<group>"; };
+		09C3D38C2BF288BE0091840F /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		09C3D38E2BF28ACA0091840F /* NetworkErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +120,8 @@
 		091F9D592BF0DB6D001549BB /* BornlogicTest */ = {
 			isa = PBXGroup;
 			children = (
+				09C3D38B2BF288B10091840F /* Services */,
+				09C3D3862BF27A340091840F /* Article */,
 				091F9D922BF0F76F001549BB /* Commons */,
 				091F9D902BF0F335001549BB /* Secrets */,
 				091F9D8D2BF0EA55001549BB /* System */,
@@ -137,6 +153,10 @@
 				091F9D5E2BF0DB6D001549BB /* NewsListViewController.swift */,
 				091F9D8B2BF0EA36001549BB /* NewListView.swift */,
 				091F9D8E2BF0F28E001549BB /* NewsListCell.swift */,
+				09C3D3802BF279AA0091840F /* NewsListingInteractor.swift */,
+				09C3D3822BF279B50091840F /* NewsListingPresenter.swift */,
+				09C3D3842BF279C40091840F /* NewsListingRouter.swift */,
+				09C3D3872BF27E220091840F /* NewsListingContractor.swift */,
 			);
 			path = NewsListing;
 			sourceTree = "<group>";
@@ -166,8 +186,25 @@
 			children = (
 				091F9D932BF0F77D001549BB /* Colors.swift */,
 				091F9D952BF0FCC4001549BB /* ViewCode.swift */,
+				09C3D3892BF284DF0091840F /* NewsEntity.swift */,
 			);
 			path = Commons;
+			sourceTree = "<group>";
+		};
+		09C3D3862BF27A340091840F /* Article */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Article;
+			sourceTree = "<group>";
+		};
+		09C3D38B2BF288B10091840F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				09C3D38C2BF288BE0091840F /* NetworkService.swift */,
+				09C3D38E2BF28ACA0091840F /* NetworkErrors.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,12 +337,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09C3D3812BF279AA0091840F /* NewsListingInteractor.swift in Sources */,
+				09C3D38A2BF284DF0091840F /* NewsEntity.swift in Sources */,
 				091F9D5F2BF0DB6D001549BB /* NewsListViewController.swift in Sources */,
+				09C3D38F2BF28ACA0091840F /* NetworkErrors.swift in Sources */,
 				091F9D942BF0F77D001549BB /* Colors.swift in Sources */,
+				09C3D3832BF279B50091840F /* NewsListingPresenter.swift in Sources */,
 				091F9D8F2BF0F28E001549BB /* NewsListCell.swift in Sources */,
 				091F9D962BF0FCC4001549BB /* ViewCode.swift in Sources */,
+				09C3D3852BF279C40091840F /* NewsListingRouter.swift in Sources */,
 				091F9D8C2BF0EA36001549BB /* NewListView.swift in Sources */,
+				09C3D3882BF27E220091840F /* NewsListingContractor.swift in Sources */,
 				091F9D5B2BF0DB6D001549BB /* AppDelegate.swift in Sources */,
+				09C3D38D2BF288BE0091840F /* NetworkService.swift in Sources */,
 				091F9D5D2BF0DB6D001549BB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,6 +519,7 @@
 		};
 		091F9D822BF0DB70001549BB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 091F9D912BF0F34C001549BB /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -506,6 +551,7 @@
 		};
 		091F9D832BF0DB70001549BB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 091F9D912BF0F34C001549BB /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

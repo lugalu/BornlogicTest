@@ -5,6 +5,8 @@ import UIKit
 class NewsListCell: UITableViewCell, UITextViewDelegate,ViewCode {
     static let reuseIdentifier = "NewsCell"
     
+//    var cellContent: Any = nil
+    
     lazy var titleLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -48,6 +50,15 @@ class NewsListCell: UITableViewCell, UITextViewDelegate,ViewCode {
         return imgView
     }()
     
+    lazy var authorLabel: UILabel = {
+        let author = UILabel()
+        author.translatesAutoresizingMaskIntoConstraints = false
+        author.text = "Lugalu"
+        author.font = .systemFont(ofSize: 14, weight: .light)
+        
+        return author
+    }()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -59,14 +70,38 @@ class NewsListCell: UITableViewCell, UITextViewDelegate,ViewCode {
         setupConstraints()
     }
     
-    func insertImage(image:UIImage?){
+    func insertTitle(){
+        self.addSubview(titleLabel)
+        makeTitleConstraints()
+    }
+    
+    func insertBody() {
+        //guard if text exists
+        self.addSubview(bodyTextView)
+        makeTextConstraints()
+    }
+    
+    
+    func insertImage(image:UIImage?) {
+        //guard if body text exists
         guard let image else { return }
         bodyImageView.image = image
         self.bodyTextView.addSubview(bodyImageView)
         bodyTextView.textContainer.exclusionPaths = [UIBezierPath(rect:bodyImageView.bounds)]
         makeImageConstraints()
     }
-
+    
+    func insertAuthor(){
+        //guard if author Exists
+        
+        //if body doesnt exist we group to title
+        self.addSubview(authorLabel)
+        makeAuthorConstraints()
+    }
+    
+    func insertLastConstraint(){
+        
+    }
     
 }
 
@@ -86,7 +121,7 @@ extension NewsListCell{
     
     private func makeTitleConstraints() {
         let constraints = [
-            titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 4),
+            titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
             titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
             titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -8)
         ]
@@ -95,10 +130,10 @@ extension NewsListCell{
     
     private func makeTextConstraints() {
         let constraints = [
-            bodyTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            bodyTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             bodyTextView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             bodyTextView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            bodyTextView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -4)
+            bodyTextView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -107,9 +142,16 @@ extension NewsListCell{
         let constraints = [
             bodyImageView.topAnchor.constraint(equalTo: bodyTextView.topAnchor, constant: 14),
             bodyImageView.leadingAnchor.constraint(equalTo: bodyTextView.leadingAnchor),
-            bodyImageView.widthAnchor.constraint(equalToConstant: bodyImageView.bounds.width),
-            bodyImageView.heightAnchor.constraint(equalToConstant: bodyImageView.bounds.height)
+            bodyImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 192),
+            bodyImageView.heightAnchor.constraint(equalToConstant: 304)
         ]
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    
+    private func makeAuthorConstraints(){
+     
+        
+        
     }
 }

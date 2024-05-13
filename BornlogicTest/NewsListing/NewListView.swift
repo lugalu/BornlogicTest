@@ -17,6 +17,7 @@ class NewsListView: UIView, ViewCode {
         table.dataSource = delegate
         
         table.separatorColor = .accent
+        table.separatorInset = UIEdgeInsets(top: 0, left: -100, bottom: 0, right: -100)
         table.backgroundColor = .clear
  
         table.rowHeight = UITableView.automaticDimension
