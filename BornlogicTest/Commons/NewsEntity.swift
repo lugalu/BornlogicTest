@@ -12,6 +12,7 @@ struct NewsResult: Decodable{
     var source: Source?
     var author: String?
     var title: String?
+    var description: String?
     var url: String?
     var urlToImage: String?
     var publishedAt: Date?
@@ -27,27 +28,22 @@ class NewsEntity {
     var source: Source?
     var author: String?
     var title: String?
+    var description: String?
     var url: URL?
     var urlToImage: URL?
     var publishedAt: Date?
     var content: String?
-    
     var image: UIImage? = nil
     
     init(result: NewsResult) {
         self.source = result.source
         self.author = result.author
         self.title = result.title
+        self.description = result.description
         self.url = URL(string: result.url ?? "")
         self.urlToImage = URL(string: result.urlToImage ?? "")
         self.content = result.content
         
-    }
-    
-    func convertToDate(_ stringDate: String?){
-        guard let stringDate else { return }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY-MM-DD'T'HH:mm:ss.SSS'Z'"
     }
     
 }

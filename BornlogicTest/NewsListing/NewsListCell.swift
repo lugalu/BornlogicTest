@@ -2,19 +2,16 @@
 
 import UIKit
 
-class NewsListCell: UITableViewCell, UITextViewDelegate,ViewCode {
+class NewsListCell: UITableViewCell, UITextViewDelegate {
     static let reuseIdentifier = "NewsCell"
-    
-//    var cellContent: Any = nil
-    
+        
     lazy var titleLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 30, weight: .black)
-        label.text = "Lorem Ipsum is simply dummy text of the printing and typesetting"
         label.textColor = .accent
         label.numberOfLines = 3
-        label.lineBreakMode = .byCharWrapping
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -28,9 +25,6 @@ class NewsListCell: UITableViewCell, UITextViewDelegate,ViewCode {
         textView.isUserInteractionEnabled = false
         
         textView.font = .systemFont(ofSize: 22, weight: .medium)
-        textView.text = """
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        """
         textView.textColor = .accent
         textView.backgroundColor = .clear
         textView.textContainer.maximumNumberOfLines = 15
@@ -42,7 +36,7 @@ class NewsListCell: UITableViewCell, UITextViewDelegate,ViewCode {
     
     lazy var bodyImageView: UIImageView = {
        let imgView = UIImageView()
-        imgView.bounds = CGRect(x: 0, y: 0, width: 200, height: 300)
+        imgView.bounds = CGRect(x: 0, y: 0, width: 200, height: 150)
         imgView.layer.cornerRadius = 5
         imgView.layer.masksToBounds = true
         imgView.contentMode = .scaleAspectFill
@@ -53,54 +47,83 @@ class NewsListCell: UITableViewCell, UITextViewDelegate,ViewCode {
     lazy var authorLabel: UILabel = {
         let author = UILabel()
         author.translatesAutoresizingMaskIntoConstraints = false
-        author.text = "Lugalu"
-        author.font = .systemFont(ofSize: 14, weight: .light)
+        author.font = .systemFont(ofSize: 18, weight: .light)
         
         return author
     }()
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
 
-    func setup() {
+    func setup(news: NewsEntity) {
+        if titleLabel.superview == nil{
+            contentView.addSubview(titleLabel)
+            makeTitleConstraints()
+            contentView.addSubview(authorLabel)
+            makeAuthorConstraints()
+            contentView.addSubview(bodyTextView)
+            makeTextConstraints()
+            contentView.addSubview(bodyImageView)
+            
+
+        }
         self.backgroundColor = .clear
         self.layer.cornerRadius = 10
-        setupViews()
-        setupConstraints()
+      
+        insertTitle(news.title)
+        insertAuthor(author: news.author)
+        insertBody(news.description ?? news.content)
+        insertImage(image: news.image)
+
+    }
+   
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        titleLabel.isHidden = true
+        bodyTextView.isHidden = true
+        bodyImageView.isHidden = true
+        
+        bodyTextView.textContainer.exclusionPaths = []
+        
+        titleLabel.text = nil
+        bodyTextView.text = nil
+        bodyImageView.image = nil
+        authorLabel.text = "Unknown"
+        
     }
     
-    func insertTitle(){
-        self.addSubview(titleLabel)
-        makeTitleConstraints()
+    func insertTitle(_ title: String?) {
+        titleLabel.text = title
+        titleLabel.isHidden = false
     }
     
-    func insertBody() {
-        //guard if text exists
-        self.addSubview(bodyTextView)
-        makeTextConstraints()
+    func insertBody(_ text: String?) {
+        guard let text, !text.isEmpty, text.count > 3 else {
+            return
+        }
+        bodyTextView.text = text
+        bodyTextView.isHidden = false
     }
     
     
     func insertImage(image:UIImage?) {
-        //guard if body text exists
         guard let image else { return }
         bodyImageView.image = image
-        self.bodyTextView.addSubview(bodyImageView)
-        bodyTextView.textContainer.exclusionPaths = [UIBezierPath(rect:bodyImageView.bounds)]
-        makeImageConstraints()
+        bodyImageView.isHidden = false
+        
+        if !bodyTextView.isHidden {
+            bodyTextView.textContainer.exclusionPaths = [UIBezierPath(rect:bodyImageView.bounds)]
+            makeTextImageConstraints()
+            return
+        }
+        
+        makeLooseImageConstraints()
     }
     
-    func insertAuthor(){
-        //guard if author Exists
-        
-        //if body doesnt exist we group to title
-        self.addSubview(authorLabel)
-        makeAuthorConstraints()
-    }
-    
-    func insertLastConstraint(){
-        
+    func insertAuthor(author: String?){
+        guard let author else {
+            return
+        }
+        authorLabel.text = author
+        authorLabel.isHidden = false
     }
     
 }
@@ -109,49 +132,70 @@ class NewsListCell: UITableViewCell, UITextViewDelegate,ViewCode {
 
 
 extension NewsListCell{
-    func setupViews() {
-        self.contentView.addSubview(titleLabel)
-        self.contentView.addSubview(bodyTextView)
-    }
-    
-    func setupConstraints() {
-        makeTitleConstraints()
-        makeTextConstraints()
-    }
-    
+  
     private func makeTitleConstraints() {
         let constraints = [
-            titleLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
-            titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -8)
-        ]
-        NSLayoutConstraint.activate(constraints)
-    }
-    
-    private func makeTextConstraints() {
-        let constraints = [
-            bodyTextView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            bodyTextView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            bodyTextView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            bodyTextView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8)
-        ]
-        NSLayoutConstraint.activate(constraints)
-    }
-    
-    private func makeImageConstraints(){
-        let constraints = [
-            bodyImageView.topAnchor.constraint(equalTo: bodyTextView.topAnchor, constant: 14),
-            bodyImageView.leadingAnchor.constraint(equalTo: bodyTextView.leadingAnchor),
-            bodyImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 192),
-            bodyImageView.heightAnchor.constraint(equalToConstant: 304)
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
         ]
         NSLayoutConstraint.activate(constraints)
     }
     
     
     private func makeAuthorConstraints(){
-     
-        
+        let constraints = [
+            authorLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            authorLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            authorLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
         
     }
+    
+    private func makeTextConstraints() {
+        let constraints = [
+            bodyTextView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 8),
+            bodyTextView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            bodyTextView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            bodyTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+        ]
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    private func makeTextImageConstraints(){
+        titleLabel.removeConstraints(bodyImageView.constraints)
+        authorLabel.removeConstraints(bodyImageView.constraints)
+        bodyTextView.removeConstraints(bodyImageView.constraints)
+        NSLayoutConstraint.deactivate(bodyImageView.constraints)
+
+        let constraints = [
+            bodyImageView.topAnchor.constraint(equalTo: bodyTextView.topAnchor, constant: 14),
+            bodyImageView.leadingAnchor.constraint(equalTo: bodyTextView.leadingAnchor),
+            bodyImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 190),
+            bodyImageView.heightAnchor.constraint(equalToConstant: 150),
+            bodyImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            
+        ]
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    private func makeLooseImageConstraints(){
+        titleLabel.removeConstraints(bodyImageView.constraints)
+        authorLabel.removeConstraints(bodyImageView.constraints)
+        bodyTextView.removeConstraints(bodyImageView.constraints)
+        NSLayoutConstraint.deactivate(bodyImageView.constraints)
+
+
+        let constraints = [
+            bodyImageView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor,constant: 8),
+            bodyImageView.leadingAnchor.constraint(equalTo: authorLabel.leadingAnchor),
+            bodyImageView.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor),
+            bodyImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 200),
+            bodyImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+        ]
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+
 }

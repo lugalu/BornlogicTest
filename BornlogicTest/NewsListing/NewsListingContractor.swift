@@ -6,30 +6,37 @@ protocol NewsListingControllerProtocol: UIViewController {
     var presenter: NewsListingPresenterProtocol? {get set}
     
     func updateViewContent()
+    func showErrorAlert()
+    func reloadCell(index: IndexPath)
 }
 
 protocol NewsListingRouterProtocol {
-    var view: NewsListingControllerProtocol? {get}
-    static func getRouter() -> NewsListingRouterProtocol
+    var view: NewsListingControllerProtocol? {get set}
+    static func getRouter(service: NetworkProtocol) -> NewsListingRouterProtocol
     
-    func getView() -> NewsListingControllerProtocol
+    func getView() -> NewsListingControllerProtocol?
     func navigateToArticle()// add content and view
 }
 
 protocol NewsListingPresenterProtocol {
-    var view: NewsListingControllerProtocol? {get}
-    var interactor: NewsListingInteractorProtocol? {get }
-    var router: NewsListingRouterProtocol? {get}
+    var view: NewsListingControllerProtocol? {get set}
+    var interactor: NewsListingInteractorProtocol? {get set}
+    var router: NewsListingRouterProtocol? {get set}
+    var news: Array<NewsEntity> {get}
     
     func requestContent()
-    func finishedDowloading()
+    func requestImage(for: IndexPath)
+    func finishedDowloading(_ content: [NewsEntity])
+    func finishedDowloading(image: UIImage?, forCell: IndexPath)
+    func failedToDownloadNews()
 }
 
 protocol NewsListingInteractorProtocol {
-    var presenter: NewsListingPresenterProtocol? {get}
+    var presenter: NewsListingPresenterProtocol? {get set}
+    var service: NetworkProtocol? {get set}
     
     func makeNewsRequest()
-    func makeImageRequests()
+    func makeImageRequests(url: URL, indexPath: IndexPath)
     
     
 }
