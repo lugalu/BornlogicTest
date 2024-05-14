@@ -17,6 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let router = NewsListingRouter.getRouter()
         let navigation = UINavigationController(rootViewController: router.getView() ?? UIViewController())
+        navigation.navigationBar.prefersLargeTitles = true
         window.rootViewController = navigation
         
         self.window = window

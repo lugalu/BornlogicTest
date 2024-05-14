@@ -19,11 +19,7 @@ class ArticleViewController: UIViewController, ArticleControllerProtocol {
         }
         newView.setup(content: content)
         view = newView
-        guard let date = content.publishedAt else {
-            return
-        }
-        self.navigationItem.title = date.formatted(.dateTime)
-        self.navigationItem.backButtonTitle = "Notícias"
+        
         self.navigationItem.largeTitleDisplayMode = .never
     }
 }

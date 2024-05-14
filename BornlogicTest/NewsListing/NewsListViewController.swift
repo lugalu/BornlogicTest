@@ -25,7 +25,7 @@ class NewsListViewController: UIViewController, NewsListingControllerProtocol, N
     private func makeNavigation(){
         self.navigationItem.title = "Hoje no Brasil"
         self.navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     
