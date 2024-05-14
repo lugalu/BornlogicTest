@@ -15,7 +15,7 @@ protocol NewsListingRouterProtocol {
     static func getRouter(service: NetworkProtocol) -> NewsListingRouterProtocol
     
     func getView() -> NewsListingControllerProtocol?
-    func navigateToArticle()// add content and view
+    func navigateToArticle(news: NewsEntity)
 }
 
 protocol NewsListingPresenterProtocol {
@@ -29,6 +29,7 @@ protocol NewsListingPresenterProtocol {
     func finishedDowloading(_ content: [NewsEntity])
     func finishedDowloading(image: UIImage?, forCell: IndexPath)
     func failedToDownloadNews()
+    func navigateToArticle(index: Int)
 }
 
 protocol NewsListingInteractorProtocol {

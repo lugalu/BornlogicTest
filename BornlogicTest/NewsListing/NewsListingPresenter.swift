@@ -9,6 +9,13 @@ class NewsListingPresenter: NewsListingPresenterProtocol {
     
     var news: Array<NewsEntity> = []
     
+    
+    func navigateToArticle(index: Int) {
+        guard news.count > index else { return }
+        router?.navigateToArticle(news: news[index])
+    }
+    
+    
     func requestContent() {
         interactor?.makeNewsRequest()
     }

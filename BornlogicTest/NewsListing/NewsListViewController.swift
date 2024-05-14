@@ -57,6 +57,11 @@ class NewsListViewController: UIViewController, NewsListingControllerProtocol, N
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let index = indexPath.row
+        presenter?.navigateToArticle(index: index)
+    }
+    
     
     func updateViewContent() {
         let newsView = view as? NewsListView

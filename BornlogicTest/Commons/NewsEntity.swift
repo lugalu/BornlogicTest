@@ -42,7 +42,9 @@ class NewsEntity {
         self.description = result.description
         self.url = URL(string: result.url ?? "")
         self.urlToImage = URL(string: result.urlToImage ?? "")
+        self.publishedAt = result.publishedAt
         self.content = result.content
+        
         
     }
     

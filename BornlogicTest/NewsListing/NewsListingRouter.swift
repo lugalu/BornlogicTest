@@ -3,6 +3,8 @@
 import Foundation
 
 class NewsListingRouter: NewsListingRouterProtocol {
+   
+    
     var view: NewsListingControllerProtocol?
     
     static func getRouter(service: NetworkProtocol = NetworkService.shared) -> NewsListingRouterProtocol {
@@ -30,8 +32,15 @@ class NewsListingRouter: NewsListingRouterProtocol {
         return view
     }
     
-    func navigateToArticle() {
-        //TODO: Open page!
+    func navigateToArticle(news: NewsEntity) {
+        let router = ArticleRouter.getRouter(news: news)
+        guard let viewController = router.getView() else { return }
+        if let nav = view?.navigationController {
+            nav.pushViewController(viewController, animated: true)
+            return
+        }
+        
+        view?.present(viewController, animated: true)
     }
     
     

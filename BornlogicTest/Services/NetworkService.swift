@@ -60,7 +60,9 @@ class NetworkService: NetworkProtocol {
         
         return result.articles
             .filter({$0 != nil})
-            .map({ NewsEntity(result: $0!) })
+            .map({
+                return NewsEntity(result: $0!)
+            })
     }
     
     func downloadImage(for url: URL) async throws -> UIImage? {
