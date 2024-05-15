@@ -9,12 +9,9 @@ class NewsListViewController: UIViewController, NewsListingControllerProtocol, N
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.requestContent()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         setup()
     }
+
     
     private func setup(){
         let newsView = NewsListView(delegate: self)
@@ -25,7 +22,6 @@ class NewsListViewController: UIViewController, NewsListingControllerProtocol, N
     private func makeNavigation(){
         self.navigationItem.title = "Hoje no Brasil"
         self.navigationItem.largeTitleDisplayMode = .always
-//        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     
@@ -40,15 +36,7 @@ class NewsListViewController: UIViewController, NewsListingControllerProtocol, N
               let news = presenter?.news[indexPath.row]
         else {
             return UITableViewCell()
-        }
-        
-        
-        if let visible = tableView.indexPathsForVisibleRows {
-            visible.forEach{ index in
-                presenter?.requestImage(for: index)
-            }
-        }
-        
+        }        
         
         cell.setup(news: news)
         
@@ -72,7 +60,7 @@ class NewsListViewController: UIViewController, NewsListingControllerProtocol, N
         fatalError("not implemented")
     }
     
-    func reloadCell(index: IndexPath) {
+    func reloadCells() {
         let newsView = view as? NewsListView
         newsView?.tableView.reloadData()
 

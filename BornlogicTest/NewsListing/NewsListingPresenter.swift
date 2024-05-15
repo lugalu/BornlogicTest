@@ -15,19 +15,30 @@ class NewsListingPresenter: NewsListingPresenterProtocol {
         router?.navigateToArticle(news: news[index])
     }
     
-    
     func requestContent() {
         interactor?.makeNewsRequest()
     }
     
-    func requestImage(for index: IndexPath){
-        guard index.row < news.count,
-              news[index.row].image == nil,
-            let url = news[index.row].urlToImage else {
-            return
+    func requestImages(){
+        Task(priority: .background){[weak self] in
+            let _ = await withTaskGroup(of: Int.self){ [weak self] group in
+                guard let self else { return -1 }
+                for i in 0..<self.news.count{
+                    guard let url = news[i].urlToImage else { continue }
+                    group.addTask{
+                        let image = try? await self.interactor?.makeImageRequests(url: url)
+                        self.news[i].image = image
+                        return 1
+                    }
+                    
+                }
+                return 1
+            }
+            
+            DispatchQueue.main.async {  [weak self] in
+                self?.view?.reloadCells()
+            }
         }
-        interactor?
-            .makeImageRequests(url: url, indexPath: index )
     }
     
     func finishedDowloading(_ content: [NewsEntity]) {
@@ -37,18 +48,8 @@ class NewsListingPresenter: NewsListingPresenterProtocol {
         }
         self.news = content
         self.view?.updateViewContent()
+        self.requestImages()
     }
-    
-    func finishedDowloading(image: UIImage?, forCell index: IndexPath) {
-        
-        guard let image = image else {
-            return
-        }
-        
-        news[index.row].image = image
-        view?.reloadCell(index: index)
-    }
-  
     
     func failedToDownloadNews() {
         view?.showErrorAlert()

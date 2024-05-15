@@ -1,6 +1,6 @@
 //Created by Lugalu on 13/05/24.
 
-import Foundation
+import UIKit
 
 class NewsListingInteractor: NewsListingInteractorProtocol {
     var presenter: (any NewsListingPresenterProtocol)?
@@ -25,16 +25,12 @@ class NewsListingInteractor: NewsListingInteractorProtocol {
         }
     }
     
-    func makeImageRequests(url: URL, indexPath: IndexPath) {
-        Task(priority: .userInitiated){ [weak self] in
-            guard let result = try? await self?.service?.downloadImage(for: url) else {
-                return
+    func makeImageRequests(url: URL) async throws -> UIImage? {
+            guard let result = try await self.service?.downloadImage(for: url) else {
+                return nil
             }
-            DispatchQueue.main.async {  [weak self] in
-                self?.presenter?.finishedDowloading(image: result, forCell: indexPath)
-
-            }
-        }
+            return result
+        
     }
     
     

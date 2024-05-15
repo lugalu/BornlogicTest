@@ -20,7 +20,7 @@ class NetworkService: NetworkProtocol {
         }
         
         let queryItems: [URLQueryItem] = [
-            URLQueryItem(name: "country", value: "us")
+            URLQueryItem(name: "country", value: "br")
         ]
         
         url.append(queryItems: queryItems)
@@ -59,7 +59,9 @@ class NetworkService: NetworkProtocol {
         }
         
         return result.articles
-            .filter({$0 != nil})
+            .filter({
+                return $0 != nil && ($0?.title != "[Removed]")
+            })
             .map({
                 return NewsEntity(result: $0!)
             })

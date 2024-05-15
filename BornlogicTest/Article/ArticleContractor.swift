@@ -9,7 +9,7 @@ protocol ArticleControllerProtocol: UIViewController {
 
 protocol ArticleRouterProtocol {
     var view: ArticleControllerProtocol? {get set}
-    static func getRouter(news: NewsEntity) -> ArticleRouterProtocol
+    static func getRouter(news: NewsEntity, service: NetworkProtocol?) -> ArticleRouterProtocol
     
     func getView() -> ArticleControllerProtocol?
 }
@@ -20,12 +20,15 @@ protocol ArticlePresenterProtocol {
     var router: ArticleRouterProtocol? {get set}
     var content: NewsEntity? {get set}
     
+    func requestImage() async throws -> UIImage?
 
 }
 
 protocol ArticleInteractorProtocol {
     var presenter: ArticlePresenterProtocol? {get set}
+    var service: NetworkProtocol? {get set}
     
+    func downloadImage(url: URL) async throws -> UIImage?
 }
 
 

@@ -4,12 +4,14 @@ import UIKit
 
 
 class ArticleView: UIScrollView {
+    
+    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .accent
         label.font = .systemFont(ofSize: 30, weight: .black)
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         return label
     }()
     
@@ -81,12 +83,23 @@ class ArticleView: UIScrollView {
         return textView
     }()
     
+    init(){
+        super.init(frame: .zero)
+        backgroundColor = .appBackground
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
     
     func setup(content: NewsEntity){
-        backgroundColor = .appBackground
-        assingContent(content: content)
-        addViews()
-        makeConstraints()
+            assingContent(content: content)
+            addViews()
+            makeConstraints()
+        
     }
     
     private func assingContent(content: NewsEntity){

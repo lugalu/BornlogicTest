@@ -6,6 +6,10 @@ public extension UIColor{
     static var appBackground: UIColor {
      return UIColor(named: "BackgroundColor")!
     }
+    
+    static var appSecondaryBackground: UIColor {
+     return UIColor(named: "SecondaryBackgroundColor")!
+    }
 }
 
 

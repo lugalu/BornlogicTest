@@ -7,7 +7,7 @@ protocol NewsListingControllerProtocol: UIViewController {
     
     func updateViewContent()
     func showErrorAlert()
-    func reloadCell(index: IndexPath)
+    func reloadCells()
 }
 
 protocol NewsListingRouterProtocol {
@@ -25,9 +25,8 @@ protocol NewsListingPresenterProtocol {
     var news: Array<NewsEntity> {get}
     
     func requestContent()
-    func requestImage(for: IndexPath)
+    func requestImages()
     func finishedDowloading(_ content: [NewsEntity])
-    func finishedDowloading(image: UIImage?, forCell: IndexPath)
     func failedToDownloadNews()
     func navigateToArticle(index: Int)
 }
@@ -37,7 +36,7 @@ protocol NewsListingInteractorProtocol {
     var service: NetworkProtocol? {get set}
     
     func makeNewsRequest()
-    func makeImageRequests(url: URL, indexPath: IndexPath)
+    func makeImageRequests(url: URL) async throws -> UIImage?
     
     
 }

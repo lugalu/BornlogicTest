@@ -33,7 +33,7 @@ class NewsListingRouter: NewsListingRouterProtocol {
     }
     
     func navigateToArticle(news: NewsEntity) {
-        let router = ArticleRouter.getRouter(news: news)
+        let router = ArticleRouter.getRouter(news: news, service: view?.presenter?.interactor?.service)
         guard let viewController = router.getView() else { return }
         if let nav = view?.navigationController {
             nav.pushViewController(viewController, animated: true)

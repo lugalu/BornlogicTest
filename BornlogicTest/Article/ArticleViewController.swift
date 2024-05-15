@@ -17,7 +17,14 @@ class ArticleViewController: UIViewController, ArticleControllerProtocol {
             self.dismiss(animated: true)
             return
         }
-        newView.setup(content: content)
+        
+        Task(priority: .userInitiated) {
+            if content.image == nil && content.urlToImage != nil{
+                let image = try? await presenter?.interactor?.downloadImage(url: content.urlToImage!)
+                content.image = image
+            }
+            newView.setup(content: content)
+        }
         view = newView
         
         self.navigationItem.largeTitleDisplayMode = .never
