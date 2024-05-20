@@ -38,7 +38,7 @@ class NewsListViewController: UIViewController, NewsListingControllerProtocol, N
             return UITableViewCell()
         }        
         
-        cell.setup(news: news)
+        cell.setup(content: news)
         
         tableView.invalidateIntrinsicContentSize()
         

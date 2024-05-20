@@ -34,7 +34,8 @@ class NewsListingPresenter: NewsListingPresenterProtocol {
                 }
                 return 1
             }
-            
+            try? await Task.sleep(nanoseconds: 1000000000)
+            self?.news[1].image = UIImage(named: "Bird")
             DispatchQueue.main.async {  [weak self] in
                 self?.view?.reloadCells()
             }

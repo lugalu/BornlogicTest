@@ -48,6 +48,7 @@ class NewsListCell: UITableViewCell, UITextViewDelegate {
         imgView.layer.cornerRadius = 5
         imgView.layer.masksToBounds = true
         imgView.contentMode = .scaleAspectFill
+        imgView.isHidden = true
         imgView.translatesAutoresizingMaskIntoConstraints = false
         return imgView
     }()
@@ -67,6 +68,9 @@ class NewsListCell: UITableViewCell, UITextViewDelegate {
         return view
     }()
     
+    lazy var sizeViewTopTextConstraint: NSLayoutConstraint = NSLayoutConstraint(item: sizeView, attribute: .top, relatedBy: .equal, toItem: bodyTextView, attribute: .bottom, multiplier: 1, constant: 0)
+    lazy var sizeViewTopImageConstraint: NSLayoutConstraint = NSLayoutConstraint(item: sizeView, attribute: .top, relatedBy: .equal, toItem: bodyImageView, attribute: .bottom, multiplier: 1, constant: 0)
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
@@ -85,28 +89,34 @@ class NewsListCell: UITableViewCell, UITextViewDelegate {
         container.addSubview(titleLabel)
         container.addSubview(authorLabel)
         container.addSubview(bodyTextView)
-        bodyTextView.addSubview(bodyImageView)
+        container.addSubview(bodyImageView)
         container.addSubview(sizeView)
         
-        
+        makeContainerConstraints()
+
         makeTitleConstraints()
         makeAuthorConstraints()
         makeTextConstraints()
         makeTextImageConstraints()
-        makeSizeViewConstraints()
-        makeContainerConstraints()
+        let constraints = [
+            //sizeView.topAnchor.constraint(equalTo: bottom.bottomAnchor),
+            sizeView.heightAnchor.constraint(equalToConstant: 8),
+            sizeView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
     }
     
 
-    func setup(news: NewsEntity) {
-      
-        insertTitle(news.title)
-        insertAuthor(author: news.author)
-        insertBody(news.description ?? news.content)
-        insertImage(image: news.image)
+    func setup(content: NewsEntity) {
+        insertTitle(content.title)
+        insertAuthor(author: content.author)
+        insertBody(content.description ?? content.content)
+        insertImage(image: content.image)
+        
     }
    
     override func prepareForReuse() {
+
         super.prepareForReuse()
 
         bodyImageView.isHidden = true
@@ -117,7 +127,12 @@ class NewsListCell: UITableViewCell, UITextViewDelegate {
         bodyTextView.text = "Descrição não disponivel"
         bodyImageView.image = nil
         authorLabel.text = "Unknown"
-                
+        
+    }
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        makeSizeViewConstraints()
+
     }
     
     func insertTitle(_ title: String?) {
@@ -127,7 +142,7 @@ class NewsListCell: UITableViewCell, UITextViewDelegate {
     func insertBody(_ text: String?) {
         guard let text else { return }
         bodyTextView.text = text
-        bodyTextView.setNeedsLayout()
+
     }
     
     
@@ -189,28 +204,32 @@ extension NewsListCell{
             bodyTextView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 8),
             bodyTextView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             bodyTextView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            bodyTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 170)
+            bodyTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 10)
         ]
         NSLayoutConstraint.activate(constraints)
     }
     
     private func makeTextImageConstraints(){
         let constraints = [
-            bodyImageView.topAnchor.constraint(equalTo: bodyTextView.topAnchor, constant: 14),
+            bodyImageView.topAnchor.constraint(equalTo: bodyTextView.topAnchor,
+                                               constant: bodyTextView.textContainerInset.top),
             bodyImageView.leadingAnchor.constraint(equalTo: bodyTextView.leadingAnchor),
-            bodyImageView.widthAnchor.constraint(lessThanOrEqualToConstant: 186),
-            bodyImageView.heightAnchor.constraint(equalToConstant: 150)
+            bodyImageView.widthAnchor.constraint(equalToConstant: 186),
+            bodyImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 150)
         ]
         NSLayoutConstraint.activate(constraints)
     }
     
     func makeSizeViewConstraints(){
-        let constraints = [
-            sizeView.topAnchor.constraint(equalTo: bodyTextView.bottomAnchor),
-            sizeView.heightAnchor.constraint(greaterThanOrEqualToConstant: 1),
-            sizeView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-        ]
-        NSLayoutConstraint.activate(constraints)
+       
+        if !bodyImageView.isHidden &&
+           bodyImageView.frame.height > bodyTextView.frame.height {
+            sizeViewTopTextConstraint.isActive = false
+            sizeViewTopImageConstraint.isActive = true
+        }else{
+            sizeViewTopImageConstraint.isActive = false
+            sizeViewTopTextConstraint.isActive = true
+        }
     }
 
 }
